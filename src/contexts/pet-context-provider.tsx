@@ -6,6 +6,7 @@ import { useState, createContext } from "react";
 type TPetContext = {
   pets: Pet[];
   activePetId: string | null;
+  activePet: Pet | undefined;
   handleChangeActivePetId: (id: string) => void;
 };
 
@@ -23,6 +24,8 @@ export default function PetContextProvider({
   const [activePetId, setActivePetId] = useState<string | null>(null);
   const [pets, setPets] = useState<Pet[]>(data);
 
+  const activePet = pets.find((pet) => pet.id === activePetId);
+
   const handleChangeActivePetId = (id: string) => {
     setActivePetId(id);
   };
@@ -32,6 +35,7 @@ export default function PetContextProvider({
       value={{
         pets,
         activePetId,
+        activePet,
         handleChangeActivePetId,
       }}
     >
