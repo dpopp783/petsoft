@@ -4,8 +4,17 @@ import PetDetails from "@/components/pet-details";
 import PetList from "@/components/pet-list";
 import SearchForm from "@/components/search-form";
 import Stats from "@/components/stats";
+import { BASE_API_URL } from "@/lib/constants";
 
-export default function Page() {
+export default async function Page() {
+  const response = await fetch(BASE_API_URL);
+  if (!response.ok) {
+    throw new Error("Could not fetch pets");
+  }
+  const data = await response.json();
+
+  console.log(data);
+
   return (
     <main>
       <div className="flex items-center justify-between text-white py-8">
@@ -21,7 +30,7 @@ export default function Page() {
 
         <div className="md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1">
           <ContentBlock>
-            <PetList />
+            <PetList pets={data} />
           </ContentBlock>
         </div>
 
